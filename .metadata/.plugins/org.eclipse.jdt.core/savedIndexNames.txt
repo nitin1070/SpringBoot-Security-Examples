@@ -3,7 +3,6 @@ INDEX VERSION 1.134+D:\SpringSecurityExamples\.metadata\.plugins\org.eclipse.jdt
 431840157.index
 1338518971.index
 3821213156.index
-97699254.index
 783789854.index
 3310270638.index
 3821882731.index
