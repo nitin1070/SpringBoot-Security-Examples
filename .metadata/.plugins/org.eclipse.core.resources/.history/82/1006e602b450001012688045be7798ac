@@ -1,0 +1,5 @@
+package in.main.service;
+
+public class AuthService {
+
+}

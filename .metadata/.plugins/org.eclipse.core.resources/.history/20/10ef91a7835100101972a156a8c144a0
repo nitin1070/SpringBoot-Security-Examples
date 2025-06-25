@@ -1,0 +1,56 @@
+package in.scalive.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import in.main.model.Customer;
+import in.scalive.repository.CustomerRepository;
+import in.scalive.util.JwtUtil;
+
+@Service
+public class AuthService {
+   @Autowired
+   private CustomerRepository repo;
+   @Autowired
+   private PasswordEncoder passwordEncoder;
+   @Autowired
+   private JwtUtil jwtUtil;
+   
+   public void registerCustomer(String email,String password,Double balance,String role) {
+	   if(repo.findByEmail(email).isPresent()) {
+		   throw new IllegalArgumentException("Email already exists");
+	   }
+	   if(!role.equalsIgnoreCase("ROLE_USER") && !role.equalsIgnoreCase("ROLE_ADMIN")) {
+		   throw new IllegalArgumentException("Invalid Role");
+	   }
+	   Customer cust=new Customer();
+	   cust.setEmail(email);
+	   cust.setPwd(passwordEncoder.encode(password));
+	   cust.setRole(role.toUpperCase());
+	   cust.setBalance(balance);
+	   repo.save(cust);
+	   
+   }
+   
+   public Customer getCustomerDetails(String email) {
+	   Customer cust=repo.findByEmail(email).orElse(null);
+	   if(cust==null) {
+		   throw new IllegalArgumentException("Customer not found");
+	   }
+	   return cust;
+   }
+   public String generateToken(String email) {
+	   Customer c=repo.findByEmail(email).orElse(null);
+	   if(c==null) {
+		   throw new IllegalArgumentException("Customer not found");
+	   }
+	   return jwtUtil.generateToken(email,List.of(c.getRole()));
+   }
+   public List<Customer>getAllCustomers(){
+	   return repo.findAll();
+   }
+}

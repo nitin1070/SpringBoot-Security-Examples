@@ -1,0 +1,43 @@
+package in.scalive.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import in.scalive.model.Customer;
+import in.scalive.repository.CustomerRepository;
+import in.scalive.util.JwtUtil;
+
+@Service
+public class AuthService {
+   @Autowired
+   private CustomerRepository repo;
+   @Autowired
+   private PasswordEncoder passwordEncoder;
+   @Autowired
+   private JwtUtil jwtUtil;
+   
+   public void registerCustomer(String email,String password,Double balance) {
+	   if(repo.findByEmail(email).isPresent()) {
+		   throw new IllegalArgumentException("Email already exists");
+	   }
+	   Customer cust=new Customer();
+	   cust.setEmail(email);
+	   cust.setPwd(passwordEncoder.encode(password));
+	   cust.setRole("ROLE_USER");
+	   cust.setBalance(balance);
+	   repo.save(cust);
+	   
+   }
+   public Customer getCustomerDetails(String email) {
+	   Customer cust=repo.findByEmail(email).orElse(null);
+	   if(cust==null) {
+		   throw new IllegalArgumentException("Customer not found");
+	   }
+	   return cust;
+   }
+   public String generateToken(String email) {
+	   return jwtUtil.generateToken(email);
+   }
+}

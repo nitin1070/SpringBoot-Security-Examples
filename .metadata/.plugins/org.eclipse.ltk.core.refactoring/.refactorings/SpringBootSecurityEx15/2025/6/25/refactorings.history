@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SecurityConfig.java&apos; to &apos;SpringBootJWT-Ex1/src/main/java/in.main.security&apos;&#x0D;&#x0A;- Original project: &apos;SpringBootSecurityEx15&apos;&#x0D;&#x0A;- Destination element: &apos;SpringBootJWT-Ex1/src/main/java/in.main.security&apos;&#x0D;&#x0A;- Original element: &apos;com.springsecurity.config.SecurityConfig.java&apos;" description="Copy compilation unit" destination="=SpringBootJWT-Ex1/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;in.main.security" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.springsecurity.config{SecurityConfig.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1750420101454" units="1" version="1.0"/>
+</session>
